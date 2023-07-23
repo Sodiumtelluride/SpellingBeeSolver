@@ -1,0 +1,32 @@
+import csv
+
+content = open("dictionary.csv", "r")
+bracketedList = list(csv.reader(content, delimiter=","))
+wordsList = [i[0] for i in bracketedList]
+mainLetter = input("Enter the main letter: ")
+otherLetters = list(input("Enter the other letters: "))
+alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
+def ShortenAlphabet():
+  for i in otherLetters:
+    for j in alphabet:
+      if i == j:
+        alphabet.remove(j)
+  alphabet.remove(mainLetter)
+# shortens alphabet to letters not in the spelling bee 
+
+def SpellingBeeAnswers():
+  points = 0
+  for k in range(len(wordsList)):
+    if len(wordsList[k]) >=5 and mainLetter in wordsList[k] and all(not letter in wordsList[k] for letter in alphabet):
+      if mainLetter in wordsList[k] and all(letter in wordsList[k]  for letter in otherLetters):
+        print(wordsList[k] + ": 3 points")
+        points = points + 3
+      else:
+        print(wordsList[k] + ": 1 point")
+        points = points + 1
+  print("Points: " + str(points))
+# prints out answers and point values
+
+ShortenAlphabet()
+SpellingBeeAnswers()
